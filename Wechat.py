@@ -1,6 +1,5 @@
-#!/usr/bin/env python3
-#coding = utf-8
-#date = 2018-03-17
+# coding=utf-8
+#date = 2018-03-28
 """
 【程序功能说明】
 1.程序主要利用itchat库实现了微信聊天自动回复功能，添加了weather、package、airlineTicket、trainTicket这几个.py文件
@@ -21,18 +20,19 @@ PICTURE、RECORDING、ATTACHMENT、VIDEO支持自动下载到电脑，同时转�
 print("于【%s】收到好友【%s（昵称：%s）】发来【%s】: 【%s】" .......
 print("于【%s】回复：收到您于xxx发送的【%s】,更多玩法。。。%s".......
 【配置和运行】
-本人运行环境：python3.6，macos系统
+本人运行环境：python3.6，windows系统
 使用之前请先配置所需的path路径，包括本程序中fpath；
 """
 import re
 import time
 import itchat
 from itchat.content import *
+#from cityWeather2 import SearchWeather
 from weather import SearchWeather
-from package import getPackage
-from airlineTicket import getAirline
-from trainTicket import searchTrain
-fpath = '/Users/xxx/WeChat_autoReply/downloadFiles/'
+from package import getPackages
+#from airlineTicket2 import getAirline
+#from trainTicket2 import searchTrain
+fpath = '/Users/Administrator/PycharmProjects/WeChat_autoReply/downloadFiles/'
 TDlist = []
 with open(fpath+u'好友退订列表.txt','r') as f:
     for item in f.readlines():
@@ -43,7 +43,7 @@ def text_reply(msg):
     global TDlist
     friend = itchat.search_friends(userName=msg['FromUserName'])
     replyContent = forselfContent = ""
-    fpath = '/Users/xxx/WeChat_autoReply/downloadFiles/'
+    fpath = '/Users/Administrator/PycharmProjects/WeChat_autoReply/downloadFiles/'
     typeDict = {'Picture':'img','Video':'vid','Recording':'fil','Attachment':'fil'}
     typeDict2 = {'Card':'名片','Note':'通知','Sharing':'分享','Map':'位置'}
     replyModel = "收到您于%s发送的【%s】,更多玩法请回复：快递、火车、飞机、天气（回TDD/KTT可退订/开通此功能)" % (time.strftime('%m-%d %H:%M',time.localtime()), msg['Type'])
@@ -62,7 +62,7 @@ def text_reply(msg):
             elif re.search(r"快递",msg['Content']):
                 try:
                     packNum = re.search(r"(快递)(\+)([0-9]+)",msg['Content']).group(3)
-                    replyContent = getPackage(package = packNum)
+                    replyContent = getPackages(packageNum = packNum)
                 except:
                     replyContent ="查询快递请输入：快递+运单号，如：快递+12345"
             elif re.search(r"航班",msg['Content']) or re.search(r"飞机",msg['Content']):
