@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #_*_ coding:utf-8 _*_
-#__date__ = '2018-03-17'
+#__date__ = '2018-03-28'
 import re
 import pymysql
 import requests
@@ -10,7 +10,7 @@ class SearchWeather():
     def __init__(self):
         self.URL = 'http://www.weather.com.cn/weather/101190101.shtml'
         self.HEADERS ={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 ''(KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'}
-        self.CONNECTION = pymysql.connect(host='localhost',user='root',password='XXX',db='XXX',charset='utf8',cursorclass=pymysql.cursors.DictCursor)
+        self.CONNECTION = pymysql.connect(host='127.0.0.1',user='root',password='123456',db='test',charset='utf8',cursorclass=pymysql.cursors.DictCursor)
 
     def getcityCode(self,cityName):
         SQL = "SELECT cityCode FROM cityWeather WHERE cityName='%s'" % cityName
@@ -52,6 +52,6 @@ class SearchWeather():
         detail = self.getWeather(cityCode,city) if cityCode else "亲，您输入的城市名称有误！"
         return detail
 
-if __name__ == "__main__":
-    weather = SearchWeather()
-    weather.main()
+#if __name__ == "__main__":
+    #weather = SearchWeather()
+    #weather.main()
